@@ -5,11 +5,13 @@ using System.Threading;
 namespace ConsoleApp1
 {
     // Main Class
-    class Program
+    public class Program
     {
         // Entry Point Method(Function)
         static void Main(string[] args)
         {
+            int counter = 0;
+            int tryCounter = 5;
             GetAppInfo(); // Run GetAppInfo function
 
             GreetingMessage(); // Ask for information and greet the user
@@ -19,7 +21,7 @@ namespace ConsoleApp1
 
             // Clear the console
             Console.Clear();
-
+            
             while (true)
             {
                 // Clear the console
@@ -35,8 +37,9 @@ namespace ConsoleApp1
                 int guess = 0;
 
                 // While guess is not correct
-                while (guess != correctNumber)
+                while (guess != correctNumber && counter < 5)
                 {
+                    
                     // Ask user for number
                     PrintColorMessage(ConsoleColor.Magenta, "Guess a number between 1 and 10 => ");
 
@@ -66,22 +69,32 @@ namespace ConsoleApp1
                     // Match guess to correct number
                     if (guess != correctNumber)
                     {
+                        // Substract 1 from 5 tries
+                        tryCounter--;
+
                         // Tell user it's the wrong number
                         PrintColorMessage(ConsoleColor.Red, "Wrong number, please try again");
+
+                        // Tell user how many tries is left
+                        PrintColorMessageNewLine(ConsoleColor.Cyan, $"You have {tryCounter} tries left.");
 
                         // Wait before clearing the console
                         Thread.Sleep(800);
 
                         // Clear the console
                         Console.Clear();
+
+                        // Add to try counter
+                        counter += 1;
                     }
+                   
                 }
 
                 // Tell user it's the right number
                 PrintColorMessageNewLine(ConsoleColor.Cyan, "You guessed the right number!");
 
                 // Ask to play again
-                PrintColorMessageNewLine(ConsoleColor.Yellow, "Play again? [Y or N] => ");
+                PrintColorMessage(ConsoleColor.Yellow, "Play again? [Y or N] => ");
 
                 // Answer
                 string answer = Console.ReadLine().ToUpper();
